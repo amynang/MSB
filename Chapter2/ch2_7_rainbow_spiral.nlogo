@@ -6,6 +6,7 @@ to setup
     set size 3
     set heading 180
   ]
+
   reset-ticks
 end
 
