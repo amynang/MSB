@@ -1,5 +1,8 @@
 globals [
-euclidean
+  euclidean_green
+  euclidean_red
+  euclidean_blue
+  euclidean_orange
 ]
 
 to setup
@@ -7,13 +10,37 @@ to setup
   ;;make the turtles look like arrows
   set-default-shape turtles "default"
   ;;make a bunch of green turtles
-  create-turtles 3 [
-    ;; how do I get them to be non-random
-    set color one-of [red green blue]
+  create-turtles 1 [
+    set color green
     set size 2 ;;make them easier to see
     setxy 0 0 ;;give them a random location
     set heading random 360 ;;give them a random heading
   ]
+  create-turtles 1 [
+    ;; how do I get them to be non-random
+    set color red
+    set size 2 ;;make them easier to see
+    setxy 0 0 ;;give them a random location
+    set heading random 360 ;;give them a random heading
+  ]
+  create-turtles 1 [
+    ;; how do I get them to be non-random
+    set color blue
+    set size 2 ;;make them easier to see
+    setxy 0 0 ;;give them a random location
+    set heading random 360 ;;give them a random heading
+  ]
+  create-turtles 1 [
+    ;; how do I get them to be non-random
+    set color orange
+    set size 2 ;;make them easier to see
+    setxy 0 0 ;;give them a random location
+    set heading random 360 ;;give them a random heading
+  ]
+  set euclidean_green 0
+  set euclidean_red 0
+  set euclidean_blue 0
+  set euclidean_orange 0
   reset-ticks ;;set the clock to zero
 end
 
@@ -26,19 +53,46 @@ to go
 end
 
 to move
+  if color = green [
   ;;turn a random amount
-  right random theta
-  left random theta
+  right random 15
+  left random 15
   ;;move forward
   forward speed
-  set euclidean (distancexy 0 0)
+  ;; distance from the center
+  set euclidean_green distancexy 0 0
+  ]
+    if color = red [
+  ;;turn a random amount
+  right random 30
+  left random 30
+  ;;move forward
+  forward speed
+  set euclidean_red (distancexy 0 0)
+  ]
+    if color = blue [
+  ;;turn a random amount
+  right random 60
+  left random 60
+  ;;move forward
+  forward speed
+  set euclidean_blue (distancexy 0 0)
+  ]
+    if color = orange [
+  ;;turn a random amount
+  right random 180
+  left random 180
+  ;;move forward
+  forward speed
+  set euclidean_orange (distancexy 0 0)
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
 10
-527
-328
+523
+324
 -1
 -1
 5.0
@@ -97,29 +151,14 @@ NIL
 
 SLIDER
 5
-50
-178
-84
-theta
-theta
-0
-180
-45.0
-15
-1
-degrees
-HORIZONTAL
-
-SLIDER
-5
 88
 178
-122
+121
 speed
 speed
 0
 0.003
-0.01
+0.0012
 0.0003
 1
 NIL
@@ -141,7 +180,10 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot distancexy turtles"
+"default" 1.0 0 -14439633 true "" "plot euclidean_green"
+"pen-1" 1.0 0 -5298144 true "" "plot euclidean_red"
+"pen-2" 1.0 0 -14730904 true "" "plot euclidean_blue"
+"pen-3" 1.0 0 -955883 true "" "plot euclidean_orange"
 
 @#$#@#$#@
 ## WHAT IS IT?
