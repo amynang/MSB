@@ -30,11 +30,39 @@ to make-turtles
   ]
 end
 
+;to update-turtles
+;  ask turtles [
+;  let similar-nearby count (turtles-on neighbors) with
+;    [color = [color] of myself]
+;  let total-nearby count (turtles-on neighbors)
+;  ifelse (total-nearby = 0 and happy-alone?) ;; switch determines of no-neighbors is reason to move
+;    [set prop-similar-neighbors 1]
+;    [set prop-similar-neighbors 0]
+;  if (total-nearby > 0)
+;    [set prop-similar-neighbors (similar-nearby / total-nearby)]
+;  set happy? (prop-similar-neighbors >= similarity-threshold)
+;  ]
+;end
+
+to-report von-neumann-offsets [ n ]
+  let result [list pxcor pycor] of patches with [abs pxcor + abs pycor <= n]
+  report remove [0 0] result
+end
+to-report moore-offsets [ n ]
+  let result [list pxcor pycor] of patches with [abs pxcor <= n and abs pycor <= n]
+  report remove [0 0] result
+end
+
 to update-turtles
   ask turtles [
-  let similar-nearby count (turtles-on neighbors) with
+;  (ifelse neighborhood = "von Neumann"
+;    [ let nearby von-neumann-offsets radius ]
+;    [ let nearby moore-offsets radius ])
+  let nearby von-neumann-offsets radius
+  let neighborhood patches at-points nearby
+  let similar-nearby count (turtles-on neighborhood) with
     [color = [color] of myself]
-  let total-nearby count (turtles-on neighbors)
+  let total-nearby count (turtles-on neighborhood)
   ifelse (total-nearby = 0 and happy-alone?) ;; switch determines of no-neighbors is reason to move
     [set prop-similar-neighbors 1]
     [set prop-similar-neighbors 0]
@@ -171,7 +199,7 @@ similarity-threshold
 similarity-threshold
 0
 1
-0.4
+0.7
 0.05
 1
 NIL
@@ -276,7 +304,22 @@ CHOOSER
 moving-strategy
 moving-strategy
 "anywhere" "lazy"
+0
+
+SLIDER
+740
+155
+832
+188
+radius
+radius
 1
+3
+1.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
