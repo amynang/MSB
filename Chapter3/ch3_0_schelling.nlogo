@@ -7,9 +7,7 @@ turtles-own [
 happy? ;; enough neighbors like me?
 prop-similar-neighbors ;; proportion similar neighbors
 ]
-patches-own [
 
-]
 
 to setup
   clear-all
@@ -44,6 +42,7 @@ end
 ;  ]
 ;end
 
+;; increased radius neighborhoods
 to-report von-neumann-offsets [ n ]
   let result [list pxcor pycor] of patches with [abs pxcor + abs pycor <= n]
   report remove [0 0] result
@@ -53,22 +52,51 @@ to-report moore-offsets [ n ]
   report remove [0 0] result
 end
 
-to update-turtles
-  ask turtles [
+;; this does not work, (I think) because nearby is defined only inside the ifelse block
+;to update-turtles
+;  ask turtles [
 ;  (ifelse neighborhood = "von Neumann"
 ;    [ let nearby von-neumann-offsets radius ]
 ;    [ let nearby moore-offsets radius ])
-  let nearby von-neumann-offsets radius
-  let neighborhood patches at-points nearby
-  let similar-nearby count (turtles-on neighborhood) with
-    [color = [color] of myself]
-  let total-nearby count (turtles-on neighborhood)
-  ifelse (total-nearby = 0 and happy-alone?) ;; switch determines of no-neighbors is reason to move
-    [set prop-similar-neighbors 1]
-    [set prop-similar-neighbors 0]
-  if (total-nearby > 0)
-    [set prop-similar-neighbors (similar-nearby / total-nearby)]
-  set happy? (prop-similar-neighbors >= similarity-threshold)
+;  let neighborhood patches at-points nearby
+;  let similar-nearby count (turtles-on neighborhood) with
+;    [color = [color] of myself]
+;  let total-nearby count (turtles-on neighborhood)
+;  ifelse (total-nearby = 0 and happy-alone?) ;; switch determines of no-neighbors is reason to move
+;    [set prop-similar-neighbors 1]
+;    [set prop-similar-neighbors 0]
+;  if (total-nearby > 0)
+;    [set prop-similar-neighbors (similar-nearby / total-nearby)]
+;  set happy? (prop-similar-neighbors >= similarity-threshold)
+;  ]
+;end
+
+;; the non DRY version works
+to update-turtles
+  ask turtles [
+   ifelse (neighborhood-type = "von Neumann")
+      [let nearby von-neumann-offsets radius
+       let neighborhood patches at-points nearby
+       let similar-nearby count (turtles-on neighborhood) with
+          [color = [color] of myself]
+       let total-nearby count (turtles-on neighborhood)
+       ifelse (total-nearby = 0 and happy-alone?) ;; switch determines of no-neighbors is reason to move
+              [set prop-similar-neighbors 1]
+              [set prop-similar-neighbors 0]
+       if (total-nearby > 0)
+       [set prop-similar-neighbors (similar-nearby / total-nearby)]
+       set happy? (prop-similar-neighbors >= similarity-threshold)]
+      [let nearby moore-offsets radius
+       let neighborhood patches at-points nearby
+       let similar-nearby count (turtles-on neighborhood) with
+          [color = [color] of myself]
+       let total-nearby count (turtles-on neighborhood)
+       ifelse (total-nearby = 0 and happy-alone?) ;; switch determines of no-neighbors is reason to move
+              [set prop-similar-neighbors 1]
+              [set prop-similar-neighbors 0]
+       if (total-nearby > 0)
+       [set prop-similar-neighbors (similar-nearby / total-nearby)]
+       set happy? (prop-similar-neighbors >= similarity-threshold)]
   ]
 end
 
@@ -199,8 +227,8 @@ similarity-threshold
 similarity-threshold
 0
 1
-0.7
-0.05
+0.4
+0.025
 1
 NIL
 HORIZONTAL
@@ -320,6 +348,16 @@ radius
 1
 NIL
 HORIZONTAL
+
+CHOOSER
+720
+105
+858
+150
+neighborhood-type
+neighborhood-type
+"von Neumann" "Moore"
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
