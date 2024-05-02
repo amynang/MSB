@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE experiments SYSTEM "behaviorspace.dtd">
+<experiments>
+  <experiment name="multiple_groups" repetitions="10" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="200"/>
+    <metric>average-similarity</metric>
+    <metric>unhappiness</metric>
+    <enumeratedValueSet variable="density">
+      <value value="0.75"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="happy-alone?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="moving-strategy">
+      <value value="&quot;anywhere&quot;"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="similarity-threshold" first="0.2" step="0.2" last="0.8"/>
+    <enumeratedValueSet variable="radius">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="groups">
+      <value value="2"/>
+      <value value="3"/>
+      <value value="4"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="neighborhood-type">
+      <value value="&quot;Moore&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
