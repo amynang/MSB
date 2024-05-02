@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE experiments SYSTEM "behaviorspace.dtd">
+<experiments>
+  <experiment name="make-it-stop" repetitions="5" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="1000"/>
+    <metric>average-similarity</metric>
+    <metric>unhappiness</metric>
+    <enumeratedValueSet variable="density">
+      <value value="0.45"/>
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exact?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="happy-alone?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="moving-strategy">
+      <value value="&quot;anywhere&quot;"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="similarity-threshold" first="0.4" step="0.05" last="0.85"/>
+    <enumeratedValueSet variable="radius">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="neighborhood-type">
+      <value value="&quot;Moore&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
