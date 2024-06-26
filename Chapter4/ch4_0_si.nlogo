@@ -2,6 +2,7 @@ turtles-own [
   infected?
 ]
 
+
 to setup
   clear-all ;;clear/reset all variables
   create-turtles num-turtles [
