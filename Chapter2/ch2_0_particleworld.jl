@@ -19,7 +19,7 @@ function agent_step!(particle, model)
         randomwalk!(particle, model, 0.1, polar = Uniform(0.99*π,1.01*π))
     end
     new_collisions = count_neighbors
-    collisions += new_collisions # here is the source of the problem
+    particle.collisions += new_collisions
     # normal movement
     randomwalk!(particle, model, particle.speed, polar = Uniform(-particle.whimsy*π/180,particle.whimsy*π/180))
 
@@ -72,6 +72,15 @@ abmvideo(
     title = "Flocking"
 )
 
-adata = [(:collisions, sum)]
-adf, mdf = run!(model, 100; adata) # ERROR: UndefVarError: `collisions` not defined
 
+adata = [(:collisions, sum)]
+adf, mdf = run!(model, 100; adata)
+
+
+using GLMakie # using a different plotting backend that enables interactive plots
+
+fig, abmobs = abmexploration(
+    model; 
+    adata
+)
+fig
