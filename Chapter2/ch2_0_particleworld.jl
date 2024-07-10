@@ -14,11 +14,12 @@ function agent_step!(particle, model)
     for neighbor in nearby_agents(particle, model, 2)
         count_neighbors += 1
     end
-    # if any particles nearby, make a u-trurn
+    # if any particles nearby, make a u-turn
     if count_neighbors > 0
         randomwalk!(particle, model, 0.1, polar = Uniform(0.99*π,1.01*π))
     end
-    collisions += collisions # here is what I am doing wrong
+    new_collisions = count_neighbors
+    collisions += new_collisions # here is the source of the problem
     # normal movement
     randomwalk!(particle, model, particle.speed, polar = Uniform(-particle.whimsy*π/180,particle.whimsy*π/180))
 
@@ -71,6 +72,6 @@ abmvideo(
     title = "Flocking"
 )
 
-
 adata = [(:collisions, sum)]
 adf, mdf = run!(model, 100; adata) # ERROR: UndefVarError: `collisions` not defined
+
