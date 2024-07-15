@@ -58,7 +58,7 @@ model = initialize_model()
 
 using CairoMakie
 
-# this part does not work (i.e abmplot throws error)
+# this part does not work (i.e abmplot throws error, see issue #1045)
 const particle_polygon = Makie.Polygon(Point2f[(-1, -1), (2, 0), (-1, 1)])
 function particle_marker(b::Particle)
     φ = atan(b.vel[2], b.vel[1]) #+ π/2 + π
