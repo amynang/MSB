@@ -67,7 +67,7 @@ end
 
 abmvideo(
     "flocking.mp4", model;
-    #agent_marker = :diamond,
+    #agent_marker = particle_marker, # here is the bit that results in error
     framerate = 10, frames = 500,
     title = "Flocking"
 )
