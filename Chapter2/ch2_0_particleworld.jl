@@ -15,6 +15,8 @@ function agent_step!(particle, model)
         count_neighbors += 1
     end
     # if any particles nearby, make a u-turn
+    # notice that in the Netlogo version (line 39 ask turtles in-radius 1) all turtles involved in a collision perform this move
+    # this is not exactly equivalent
     if count_neighbors > 0
         randomwalk!(particle, model, 0.2, polar = Uniform(0.99*π,1.01*π))
     end
